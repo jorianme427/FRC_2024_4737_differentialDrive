@@ -28,28 +28,29 @@ public class CANDrivetrain extends SubsystemBase {
    */
   public CANDrivetrain() {
     CANSparkMax leftFront = new CANSparkMax(kLeftFrontID, MotorType.kBrushless);
-    CANSparkMax leftRear = new CANSparkMax(kLeftRearID, MotorType.kBrushless);
-    CANSparkMax rightFront = new CANSparkMax(kRightFrontID, MotorType.kBrushless);
-    CANSparkMax rightRear = new CANSparkMax(kRightRearID, MotorType.kBrushless);
+    try (CANSparkMax leftRear = new CANSparkMax(kLeftRearID, MotorType.kBrushless)) {
+      CANSparkMax rightFront = new CANSparkMax(kRightFrontID, MotorType.kBrushless);
+      try (CANSparkMax rightRear = new CANSparkMax(kRightRearID, MotorType.kBrushless)) {
+        /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
+         *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
+        leftFront.setSmartCurrentLimit(kCurrentLimit);
+        leftRear.setSmartCurrentLimit(kCurrentLimit);
+        rightFront.setSmartCurrentLimit(kCurrentLimit);
+        rightRear.setSmartCurrentLimit(kCurrentLimit);
 
-    /*Sets current limits for the drivetrain motors. This helps reduce the likelihood of wheel spin, reduces motor heating
-     *at stall (Drivetrain pushing against something) and helps maintain battery voltage under heavy demand */
-    leftFront.setSmartCurrentLimit(kCurrentLimit);
-    leftRear.setSmartCurrentLimit(kCurrentLimit);
-    rightFront.setSmartCurrentLimit(kCurrentLimit);
-    rightRear.setSmartCurrentLimit(kCurrentLimit);
+        // Set the rear motors to follow the front motors.
+        leftRear.follow(leftFront);
+        rightRear.follow(rightFront);
+      }
 
-    // Set the rear motors to follow the front motors.
-    leftRear.follow(leftFront);
-    rightRear.follow(rightFront);
+      // Invert the left side so both side drive forward with positive motor outputs
+      leftFront.setInverted(true);
+      rightFront.setInverted(false);
 
-    // Invert the left side so both side drive forward with positive motor outputs
-    leftFront.setInverted(true);
-    rightFront.setInverted(false);
-
-    // Put the front motors into the differential drive object. This will control all 4 motors with
-    // the rears set to follow the fronts
-    m_drivetrain = new DifferentialDrive(leftFront, rightFront);
+      // Put the front motors into the differential drive object. This will control all 4 motors with
+      // the rears set to follow the fronts
+      m_drivetrain = new DifferentialDrive(leftFront, rightFront);
+    }
   }
 
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction

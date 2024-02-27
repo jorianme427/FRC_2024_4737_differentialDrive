@@ -48,5 +48,36 @@ public final class Constants {
     public static final double kIntakeFeederSpeed = -.2;
 
     public static final double kLauncherDelay = 1;
+    
   }
+
+  public static class IntakeConstants {
+    // PWM ports/CAN IDs for motor controllers
+    public static final int kIntakeID = 7;
+    
+    // Current limit for launcher and feed wheels
+    public static final int kIntakeCurrentLimit = 80;
+
+    // Speeds for wheels when intaking. Intake speeds are negative to run the wheels
+    // in reverse
+    public static final double kIntakeSpeed = 1;
+    public static final double kIntakeReverseSpeed = -1;
+
+    public static final double kIntakeDelay = 0.0001;
+
+  }
+  public static class ClimberConstants {
+    // PWM ports/CAN IDs for motor controllers
+    public static final int kClimberID = 9;
+    
+    // Current limit for launcher and feed wheels
+    public static final int kClimberCurrentLimit = 80;
+
+    // Speeds for wheels when intaking. Intake speeds are negative to run the wheels
+    // in reverse
+    public static final double kClimberSpeed = 1;
+    public static final double kClimberReverseSpeed = -1;
+
+    public static final double kClimberDelay = 0.000176;
+}
 }
