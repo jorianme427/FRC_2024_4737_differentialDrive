@@ -4,21 +4,24 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.IntakeConstants.*;
+import static frc.robot.Constants.IntakeFeederConstants.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class CANIntakeSubSystem extends SubsystemBase {
+public class CANIntakeFeedSubSystem extends SubsystemBase {
   CANSparkMax m_IntakeWheel;
+  CANSparkMax m_Feeder;
 
   /** Creates a new Intake. */
-  public CANIntakeSubSystem() {
+  public CANIntakeFeedSubSystem() {
     m_IntakeWheel = new CANSparkMax(kIntakeID, MotorType.kBrushless);
+    m_Feeder = new CANSparkMax(kFeederID, MotorType.kBrushless);
 
     m_IntakeWheel.setSmartCurrentLimit(kIntakeCurrentLimit);
+    m_Feeder.setSmartCurrentLimit(kIntakeCurrentLimit);
     
   }
 
