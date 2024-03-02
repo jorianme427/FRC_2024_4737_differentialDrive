@@ -88,4 +88,18 @@ public final class Constants {
 
     public static final double kClimberDelay = 0.000176;
 }
+public static class ElevatorConstants {
+    // PWM ports/CAN IDs for motor controllers
+    public static final int kElevatorID = 9;
+    
+    // Current limit for Elevator
+    public static final int kElevatorCurrentLimit = 80;
+
+    // Speeds for wheels when Elevating. Elevating speeds are negative to run the wheels
+    // in reverse
+    public static final double kElevatorSpeed = 1;
+    public static final double kElevatorReverseSpeed = -1;
+
+    public static final double kElevatorDelay = 0.000176;
+}
 }
