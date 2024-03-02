@@ -4,12 +4,12 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.IntakeFeederConstants.*;
+import static frc.robot.Constants.IntakeConstants.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
 //import frc.robot.subsystems.PWMLauncher;
 
-import frc.robot.subsystems.CANIntakeFeedSubSystem;
+import frc.robot.subsystems.CANIntake;
 
 /*This is an example of creating a command as a class. The base Command class provides a set of methods that your command
  * will override.
@@ -17,10 +17,10 @@ import frc.robot.subsystems.CANIntakeFeedSubSystem;
 public class IntakeNote extends Command {
  // PWMLauncher m_launcher;
 
-  CANIntakeFeedSubSystem m_intake;
+  CANIntake m_intake;
 
   /** Creates a new LaunchNote. */
-  public LaunchNote(CANIntakeFeedSubSystem intake) {
+  public Intake(CANIntake intake) {
     // save the launcher system internally
     m_intake = intake;
 

@@ -11,12 +11,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class CanIntake extends SubsystemBase {
+public class CANIntake extends SubsystemBase {
   CANSparkMax m_IntakeWheel;
   CANSparkMax m_FeederWheel;
 
   /** Creates a new Intake. */
-  public CanIntake() {
+  public CANIntake() {
     m_IntakeWheel = new CANSparkMax(kIntakeID, MotorType.kBrushless);
     m_FeederWheel = new CANSparkMax(kFeederID, MotorType.kBrushless);
 

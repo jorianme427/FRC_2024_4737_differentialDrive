@@ -19,7 +19,7 @@ import frc.robot.commands.PrepareLaunch;
 
  import frc.robot.subsystems.CANDrivetrain;
  import frc.robot.subsystems.CANLauncher;
- import frc.robot.subsystems.CanIntake;
+ import frc.robot.subsystems.CANIntake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,7 +33,7 @@ public class RobotContainer {
    private final CANDrivetrain m_drivetrain = new CANDrivetrain();
   //private final PWMLauncher m_launcher = new PWMLauncher();
    private final CANLauncher m_launcher = new CANLauncher();
-   private final CanIntake m_Intake = new CanIntake();
+   private final CANIntake m_Intake = new CANIntake();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
@@ -74,16 +74,16 @@ public class RobotContainer {
     m_operatorController       
         .x()
         .WhileTrue( 
-            new IntakeNote(m_IntakeWheel)
+            new Intake(m_Intake)
               .withTimeout(IntakeConstants.kIntakeFeederDelay)
-              .handleInterrupt(() -> m_intake.stop()));
+              .handleInterrupt(() -> m_Intake.stop()));
             
 
                 
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeNoteCommand());
+    m_operatorController.leftBumper().whileTrue(m_launcher.getLauncherCommand());
   }
 
   /**
