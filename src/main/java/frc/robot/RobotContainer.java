@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Constants.IntakeFeederConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
@@ -19,7 +19,7 @@ import frc.robot.commands.PrepareLaunch;
 
  import frc.robot.subsystems.CANDrivetrain;
  import frc.robot.subsystems.CANLauncher;
- import frc.robot.subsystems.CANIntakeFeedSubSystem;
+ import frc.robot.subsystems.CanIntake;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,7 +33,7 @@ public class RobotContainer {
    private final CANDrivetrain m_drivetrain = new CANDrivetrain();
   //private final PWMLauncher m_launcher = new PWMLauncher();
    private final CANLauncher m_launcher = new CANLauncher();
-   private final CANIntakeFeedSubSystem m_IntakeFeedSubSystem = new CANIntakeFeedSubSystem();
+   private final CanIntake m_Intake = new CanIntake();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
@@ -75,7 +75,7 @@ public class RobotContainer {
         .x()
         .WhileTrue( 
             new IntakeNote(m_IntakeWheel)
-              .withTimeout(IntakeFeederConstants.kIntakeFeederDelay)
+              .withTimeout(IntakeConstants.kIntakeFeederDelay)
               .handleInterrupt(() -> m_intake.stop()));
             
 
@@ -83,7 +83,7 @@ public class RobotContainer {
 
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeCommand());
+    m_operatorController.leftBumper().whileTrue(m_launcher.getIntakeNoteCommand());
   }
 
   /**

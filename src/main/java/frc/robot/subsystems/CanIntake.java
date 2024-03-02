@@ -4,20 +4,25 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.LauncherConstants.*;
+import static frc.robot.Constants.IntakeConstants.*;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class PWMLauncher extends SubsystemBase {
-  PWMSparkMax m_launchWheel;
-  PWMSparkMax m_feedWheel;
+public class CanIntake extends SubsystemBase {
+  CANSparkMax m_IntakeWheel;
+  CANSparkMax m_FeederWheel;
 
-  /** Creates a new Launcher. */
-  public PWMLauncher() {
-    m_launchWheel = new PWMSparkMax(kLauncherID);
-    m_feedWheel = new PWMSparkMax(kFeederID);
+  /** Creates a new Intake. */
+  public CanIntake() {
+    m_IntakeWheel = new CANSparkMax(kIntakeID, MotorType.kBrushless);
+    m_FeederWheel = new CANSparkMax(kFeederID, MotorType.kBrushless);
+
+    m_IntakeWheel.setSmartCurrentLimit(kIntakeCurrentLimit);
+    m_FeederWheel.setSmartCurrentLimit(kFeederCurrentLimit);
+    
   }
 
   /**
@@ -27,14 +32,14 @@ public class PWMLauncher extends SubsystemBase {
    * that need to span subsystems. The Subsystem class has helper methods, such as the startEnd
    * method used here, to create these commands.
    */
-  public Command getIntakeCommand() {
+  public Command getIntakeNoteCommand() {
     // The startEnd helper method takes a method to call when the command is initialized and one to
     // call when it ends
     return this.startEnd(
         // When the command is initialized, set the wheels to the intake speed values
         () -> {
-          setFeedWheel(kIntakeFeederSpeed);
-          setLaunchWheel(kIntakeLauncherSpeed);
+          
+          setIntakeWheel(kIntakeSpeed);
         },
         // When the command stops, stop the wheels
         () -> {
@@ -43,19 +48,16 @@ public class PWMLauncher extends SubsystemBase {
   }
 
   // An accessor method to set the speed (technically the output percentage) of the launch wheel
-  public void setLaunchWheel(double speed) {
-    m_launchWheel.set(speed);
+  public void setIntakeWheel(double speed) {
+    m_IntakeWheel.set(speed);
   }
 
-  // An accessor method to set the speed (technically the output percentage) of the feed wheel
-  public void setFeedWheel(double speed) {
-    m_feedWheel.set(speed);
-  }
+ 
 
   // A helper method to stop both wheels. You could skip having a method like this and call the
   // individual accessors with speed = 0 instead
   public void stop() {
-    m_launchWheel.set(0);
-    m_feedWheel.set(0);
+    m_IntakeWheel.set(0);
+    
   }
 }
