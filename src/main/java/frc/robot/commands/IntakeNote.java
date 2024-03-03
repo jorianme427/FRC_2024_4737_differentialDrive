@@ -19,21 +19,21 @@ public class IntakeNote extends Command {
 
   CANIntake m_intake;
 
-  /** Creates a new LaunchNote. */
-  public Intake(CANIntake intake) {
-    // save the launcher system internally
+  /** Creates a new IntakeNote. */
+  public IntakeNote(CANIntake intake) {
+    // save the Intake system internally
     m_intake = intake;
 
-    // indicate that this command requires the launcher system
+    // indicate that this command requires the Intake system
     addRequirements(m_intake);
   }
 
   // The initialize method is called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Set the wheels to launching speed
+    // Set the wheels to intaking speed
     m_intake.setIntakeWheel(kIntakeSpeed);
-    m_intake.setFeedWheel(kFeederSpeed);
+    m_intake.setFeederWheel(kFeederSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

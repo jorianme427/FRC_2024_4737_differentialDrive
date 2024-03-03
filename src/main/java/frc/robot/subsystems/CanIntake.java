@@ -40,6 +40,7 @@ public class CANIntake extends SubsystemBase {
         () -> {
           
           setIntakeWheel(kIntakeSpeed);
+          setFeederWheel(kFeederSpeed);
         },
         // When the command stops, stop the wheels
         () -> {
@@ -50,6 +51,10 @@ public class CANIntake extends SubsystemBase {
   // An accessor method to set the speed (technically the output percentage) of the launch wheel
   public void setIntakeWheel(double speed) {
     m_IntakeWheel.set(speed);
+    
+  }
+  public void setFeederWheel(double speed) {
+    m_FeederWheel.set(speed);
   }
 
  
@@ -58,6 +63,7 @@ public class CANIntake extends SubsystemBase {
   // individual accessors with speed = 0 instead
   public void stop() {
     m_IntakeWheel.set(0);
+    m_FeederWheel.set(0);
     
   }
 }

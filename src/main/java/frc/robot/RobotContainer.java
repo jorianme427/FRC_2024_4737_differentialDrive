@@ -14,6 +14,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
+import frc.robot.commands.IntakeNote;
 //import frc.robot.subsystems.PWMDrivetrain;
 //import frc.robot.subsystems.PWMLauncher;
 
@@ -74,9 +75,10 @@ public class RobotContainer {
     m_operatorController       
         .x()
         .WhileTrue( 
-            new Intake(m_Intake)
-              .withTimeout(IntakeConstants.kIntakeFeederDelay)
-              .handleInterrupt(() -> m_Intake.stop()));
+            new IntakeNote(m_Intake)
+               .withTimeout(IntakeConstants.kIntakeFeederDelay)
+               .andThen(new )
+               .handleInterrupt(() -> m_Intake.stop()));
             
 
                 
