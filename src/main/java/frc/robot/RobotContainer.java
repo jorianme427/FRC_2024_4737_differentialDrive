@@ -12,14 +12,16 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ElevatorUp;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.commands.IntakeNote;
 //import frc.robot.subsystems.PWMDrivetrain;
 //import frc.robot.subsystems.PWMLauncher;
-
- import frc.robot.subsystems.CANDrivetrain;
- import frc.robot.subsystems.CANLauncher;
+import frc.robot.subsystems.CANClimber;
+import frc.robot.subsystems.CANDrivetrain;
+import frc.robot.subsystems.CANElevator;
+import frc.robot.subsystems.CANLauncher;
  import frc.robot.subsystems.CANIntake;
 
 /**
@@ -30,11 +32,11 @@ import frc.robot.commands.IntakeNote;
  */
 public class RobotContainer {
   // The robot's subsystems are defined here.
-  //private final PWMDrivetrain m_drivetrain = new PWMDrivetrain();
    private final CANDrivetrain m_drivetrain = new CANDrivetrain();
-  //private final PWMLauncher m_launcher = new PWMLauncher();
    private final CANLauncher m_launcher = new CANLauncher();
    private final CANIntake m_Intake = new CANIntake();
+   private final CANClimber m_climber = new CANClimber();
+   private final CANElevator m_Elevator = new CANElevator();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
    * switch on the top.*/
@@ -66,17 +68,41 @@ public class RobotContainer {
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
     m_operatorController
-        .a()
+        .y()
         .whileTrue(
             new PrepareLaunch(m_launcher)
                 .withTimeout(LauncherConstants.kLauncherDelay)
                 .andThen(new LaunchNote(m_launcher))
                 .handleInterrupt(() -> m_launcher.stop()));
-  
+    m_operatorController
+        .x()
+        .whileTrue(
+            new IntakeNote(m_Intake)
+        );
+    
+        new RunCommand(
+            () ->
+                m_Elevator.setElevator(
+                    -m_operatorController.getLeftY()),
+            m_Elevator);
+        
+    // Set up a binding to run the launcher command while the operator is pressing and holding the
+    // left trigger
+    m_operatorController.leftTrigger().whileTrue(m_launcher.getLauncherCommand());
+    // Set up a binding to run the intake command while the operator is pressing and holding the
+    // right trigger
+    m_operatorController.rightTrigger().whileTrue(m_Intake.getIntakeNoteCommand());
+    // Set up a binding to run the climber UP command while the operator is pressing and holding the
+    // a button
+    m_operatorController.a().whileTrue(m_climber.getCLimberCommand());
+    // Set up a binding to run the climber DOWN command while the operator is pressing and holding the
+    // b button
+    m_operatorController.b().whileTrue(m_climber.getCLimberDownCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    m_operatorController.leftBumper().whileTrue(m_launcher.getLauncherCommand());
-    m_operatorController.rightBumper().whileTrue(m_Intake.getIntakeNoteCommand());
+    
+    //m_operatorController.b().whileTrue(m_Elevator.getElevatorDownCommand());
+    //m_operatorController.b().whileTrue(m_Elevator.getElevatorCommand());
   }
 
   /**

@@ -47,7 +47,21 @@ public class CANIntake extends SubsystemBase {
           stop();
         });
   }
-
+ public Command getIntakeOutCommand() {
+    // The startEnd helper method takes a method to call when the command is initialized and one to
+    // call when it ends
+    return this.startEnd(
+        // When the command is initialized, set the wheels to the intake speed values
+        () -> {
+          
+          setIntakeWheel(kIntakeReverseSpeed);
+          setFeederWheel(kFeederReverseSpeed);
+        },
+        // When the command stops, stop the wheels
+        () -> {
+          stop();
+        });
+  }
   // An accessor method to set the speed (technically the output percentage) of the launch wheel
   public void setIntakeWheel(double speed) {
     m_IntakeWheel.set(speed);

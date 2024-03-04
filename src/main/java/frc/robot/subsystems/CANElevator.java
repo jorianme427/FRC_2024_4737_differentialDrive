@@ -15,7 +15,7 @@ public class CANElevator extends SubsystemBase {
   CANSparkMax m_elevator;
  
 
-  /** Creates a new Launcher. */
+  /** Creates a new Elevator. */
   public CANElevator() {
     m_elevator = new CANSparkMax(kElevatorID, MotorType.kBrushless);
     
@@ -36,7 +36,21 @@ public class CANElevator extends SubsystemBase {
     return this.startEnd(
         // When the command is initialized, set the wheels to the intake speed values
         () -> {
-          setLeftLaunchWheel(kElevatorSpeed);
+          setElevator(kElevatorSpeed);
+          
+        },
+        // When the command stops, stop the wheels
+        () -> {
+          stop();
+        });
+  }
+  public Command getElevatorDownCommand() {
+    // The startEnd helper method takes a method to call when the command is initialized and one to
+    // call when it ends
+    return this.startEnd(
+        // When the command is initialized, set the wheels to the intake speed values
+        () -> {
+          setElevator(kElevatorSpeed);
           
         },
         // When the command stops, stop the wheels
@@ -45,8 +59,8 @@ public class CANElevator extends SubsystemBase {
         });
   }
 
-  // An accessor method to set the speed (technically the output percentage) of the launch wheel
-  public void setLeftLaunchWheel(double speed) {
+  // An accessor method to set the speed (technically the output percentage) of the Elevator
+  public void setElevator(double speed) {
     m_elevator.set(speed);
   }
 
