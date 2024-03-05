@@ -3,14 +3,11 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
+  //if something goes wrong remove what was in configurations
   "configurations": [
-    {
-      "type": "java",
-      "name": "Main",
-      "request": "launch",
-      "mainClass": "frc.robot.Main",
-      "projectName": "Java"
-    },
+    
+      
+    
     {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
