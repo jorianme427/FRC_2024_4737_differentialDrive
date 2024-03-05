@@ -53,7 +53,7 @@ public class CANLauncher extends SubsystemBase {
 
   // An accessor method to set the speed (technically the output percentage) of the feed wheel
   public void setRightLaunchWheel(double speed) {
-    m_rightLaunchWheel.set(speed);
+    m_rightLaunchWheel.set(-speed);
   }
 
   // A helper method to stop both wheels. You could skip having a method like this and call the

@@ -22,10 +22,10 @@ public final class Constants {
 
   public static class DrivetrainConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kLeftRearID = 1;
+    public static final int kLeftRearID = 8;
     public static final int kLeftFrontID = 2;
-    public static final int kRightRearID = 3;
-    public static final int kRightFrontID = 4;
+    public static final int kRightRearID = 10;
+    public static final int kRightFrontID = 9;
 
     // Current limit for drivetrain motors
     public static final int kCurrentLimit = 60;
@@ -33,15 +33,15 @@ public final class Constants {
 
   public static class LauncherConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kLeftLauncherID = 5;
-    public static final int kRightLauncherID = 6;
+    public static final int kLeftLauncherID = 6;
+    public static final int kRightLauncherID = 5;
 
     // Current limit for launcher and feed wheels
     public static final int kLeftLauncherCurrentLimit = 80;
     public static final int kRightLauncherCurrentLimit = 80;
 
     // Speeds for wheels when intaking and launching. Intake speeds are negative to run the wheels
-    // in reverse
+    // in reversed
     public static final double kLeftLauncherSpeed = 1;
     public static final double kRightLauncherSpeed = 1;
     public static final double kReverseLeftLauncherSpeed = -1;
@@ -53,8 +53,8 @@ public final class Constants {
 
   public static class IntakeConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kIntakeID = 7;
-    public static final int kFeederID = 8;
+    public static final int kIntakeID = 3;
+    public static final int kFeederID = 7;
 
     
     // Current limit for launcher and feed wheels
@@ -76,7 +76,7 @@ public final class Constants {
   }
   public static class ClimberConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kClimberID = 9;
+    public static final int kClimberID = 15;
     
     // Current limit for launcher and feed wheels
     public static final int kClimberCurrentLimit = 80;
@@ -90,15 +90,15 @@ public final class Constants {
 }
 public static class ElevatorConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kElevatorID = 9;
+    public static final int kElevatorID = 11;
     
     // Current limit for Elevator
     public static final int kElevatorCurrentLimit = 80;
 
     // Speeds for wheels when Elevating. Elevating speeds are negative to run the wheels
     // in reverse
-    public static final double kElevatorSpeed = 1;
-    public static final double kElevatorReverseSpeed = -1;
+    public static final double kElevatorSpeed = .4;
+    public static final double kElevatorReverseSpeed = -.4;
 
     public static final double kElevatorDelay = 0.000176;
 }

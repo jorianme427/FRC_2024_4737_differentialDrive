@@ -16,6 +16,7 @@ import frc.robot.commands.ElevatorUp;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.commands.IntakeNote;
+import frc.robot.commands.IntakeLauncher;
 //import frc.robot.subsystems.PWMDrivetrain;
 //import frc.robot.subsystems.PWMLauncher;
 import frc.robot.subsystems.CANClimber;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.CANElevator;
 import frc.robot.subsystems.CANLauncher;
  import frc.robot.subsystems.CANIntake;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -78,6 +80,8 @@ public class RobotContainer {
         .x()
         .whileTrue(
             new IntakeNote(m_Intake)
+            .withTimeout(IntakeConstants.kIntakeFeederDelay)
+
         );
     
         new RunCommand(
@@ -100,7 +104,7 @@ public class RobotContainer {
     m_operatorController.b().whileTrue(m_climber.getCLimberDownCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-    
+
     //m_operatorController.b().whileTrue(m_Elevator.getElevatorDownCommand());
     //m_operatorController.b().whileTrue(m_Elevator.getElevatorCommand());
   }

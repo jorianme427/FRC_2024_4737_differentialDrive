@@ -17,8 +17,8 @@ public class CANIntake extends SubsystemBase {
 
   /** Creates a new Intake. */
   public CANIntake() {
-    m_IntakeWheel = new CANSparkMax(kIntakeID, MotorType.kBrushless);
-    m_FeederWheel = new CANSparkMax(kFeederID, MotorType.kBrushless);
+    m_IntakeWheel = new CANSparkMax(kIntakeID, MotorType.kBrushed);
+    m_FeederWheel = new CANSparkMax(kFeederID, MotorType.kBrushed);
 
     m_IntakeWheel.setSmartCurrentLimit(kIntakeCurrentLimit);
     m_FeederWheel.setSmartCurrentLimit(kFeederCurrentLimit);
@@ -64,7 +64,7 @@ public class CANIntake extends SubsystemBase {
   }
   // An accessor method to set the speed (technically the output percentage) of the launch wheel
   public void setIntakeWheel(double speed) {
-    m_IntakeWheel.set(speed);
+    m_IntakeWheel.set(-speed);
     
   }
   public void setFeederWheel(double speed) {
