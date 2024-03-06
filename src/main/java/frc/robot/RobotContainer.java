@@ -17,13 +17,14 @@ import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.IntakeLauncher;
+import frc.robot.commands.FeedShoot;
 //import frc.robot.subsystems.PWMDrivetrain;
 //import frc.robot.subsystems.PWMLauncher;
 import frc.robot.subsystems.CANClimber;
 import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.CANElevator;
 import frc.robot.subsystems.CANLauncher;
- import frc.robot.subsystems.CANIntake;
+import frc.robot.subsystems.CANIntake;
 
 
 /**
@@ -72,41 +73,48 @@ public class RobotContainer {
     m_operatorController
         .y()
         .whileTrue(
-            new PrepareLaunch(m_launcher)
-                .withTimeout(LauncherConstants.kLauncherDelay)
-                .andThen(new LaunchNote(m_launcher))
+            new LaunchNote(m_launcher)
                 .handleInterrupt(() -> m_launcher.stop()));
     m_operatorController
-        .x()
+        .b()
         .whileTrue(
-            new IntakeNote(m_Intake)
-            .withTimeout(IntakeConstants.kIntakeFeederDelay)
+          new FeedShoot(m_Intake)
+                .handleInterrupt(() -> m_Intake.stop()));
+        
+                
+    m_operatorController
+        .rightTrigger()
+        .whileTrue(
+            new IntakeLauncher(m_launcher)
+                .handleInterrupt(() -> m_launcher.stop()));
+                
+                
 
-        );
-    
-        new RunCommand(
-            () ->
-                m_Elevator.setElevator(
-                    -m_operatorController.getLeftY()),
-            m_Elevator);
+        //new RunCommand(
+           // () ->
+           //     m_Elevator.setElevator(
+             //       -m_operatorController.getLeftY()),
+            //m_Elevator);
         
     // Set up a binding to run the launcher command while the operator is pressing and holding the
     // left trigger
-    m_operatorController.leftTrigger().whileTrue(m_launcher.getLauncherCommand());
+   // m_operatorController.y().whileTrue(m_launcher.getLauncherCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // right trigger
     m_operatorController.rightTrigger().whileTrue(m_Intake.getIntakeNoteCommand());
+
+    m_operatorController.b().whileTrue(m_Intake.getFeedShootCommand());
     // Set up a binding to run the climber UP command while the operator is pressing and holding the
     // a button
     m_operatorController.a().whileTrue(m_climber.getCLimberCommand());
     // Set up a binding to run the climber DOWN command while the operator is pressing and holding the
     // b button
-    m_operatorController.b().whileTrue(m_climber.getCLimberDownCommand());
+    //m_operatorController.b().whileTrue(m_climber.getCLimberDownCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
 
-    //m_operatorController.b().whileTrue(m_Elevator.getElevatorDownCommand());
-    //m_operatorController.b().whileTrue(m_Elevator.getElevatorCommand());
+    m_operatorController.leftTrigger().whileTrue(m_Elevator.getElevatorDownCommand());
+    m_operatorController.leftBumper().whileTrue(m_Elevator.getElevatorCommand());
   }
 
   /**

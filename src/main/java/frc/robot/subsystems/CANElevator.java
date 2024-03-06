@@ -50,7 +50,7 @@ public class CANElevator extends SubsystemBase {
     return this.startEnd(
         // When the command is initialized, set the wheels to the intake speed values
         () -> {
-          setElevator(kElevatorSpeed);
+          setElevator(kElevatorReverseSpeed);
           
         },
         // When the command stops, stop the wheels

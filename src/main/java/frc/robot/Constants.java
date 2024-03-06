@@ -37,8 +37,8 @@ public final class Constants {
     public static final int kRightLauncherID = 5;
 
     // Current limit for launcher and feed wheels
-    public static final int kLeftLauncherCurrentLimit = 80;
-    public static final int kRightLauncherCurrentLimit = 80;
+    public static final int kLeftLauncherCurrentLimit = 100;
+    public static final int kRightLauncherCurrentLimit = 100;
 
     // Speeds for wheels when intaking and launching. Intake speeds are negative to run the wheels
     // in reversed
@@ -47,7 +47,8 @@ public final class Constants {
     public static final double kReverseLeftLauncherSpeed = -1;
     public static final double kReverseRightLauncherSpeed = -1;
 
-    public static final double kLauncherDelay = 1;
+    public static final double kLauncherDelay = .25;
+    
     
   }
 
@@ -70,7 +71,7 @@ public final class Constants {
     public static final double kFeederReverseSpeed = -1;
 
     
-    public static final double kIntakeFeederDelay = 0.0001;
+    public static final double kIntakeFeederDelay = 2.0;
 
 
   }

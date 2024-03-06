@@ -4,35 +4,36 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.LauncherConstants.*;
+import static frc.robot.Constants.IntakeConstants.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
+//import frc.robot.subsystems.PWMLauncher;
 
-import frc.robot.subsystems.CANLauncher;
+import frc.robot.subsystems.CANIntake;
 
 /*This is an example of creating a command as a class. The base Command class provides a set of methods that your command
  * will override.
  */
-public class IntakeLauncher extends Command {
+public class FeedShoot extends Command {
  // PWMLauncher m_launcher;
 
-  CANLauncher m_launcher;
+  CANIntake m_intake;
 
-  /** Creates a new LaunchNote. */
-  public IntakeLauncher(CANLauncher launcher) {
-    // save the launcher system internally
-    m_launcher = launcher;
+  /** Creates a new IntakeNote. */
+  public FeedShoot(CANIntake intake) {
+    // save the Intake system internally
+    m_intake = intake;
 
-    // indicate that this command requires the launcher system
-    addRequirements(m_launcher);
+    // indicate that this command requires the Intake system
+    addRequirements(m_intake);
   }
 
   // The initialize method is called when the command is initially scheduled.
   @Override
   public void initialize() {
-    // Set the wheels to launching speed
-    m_launcher.setLeftLaunchWheel(kLeftLauncherSpeed);
-    m_launcher.setRightLaunchWheel(kRightLauncherSpeed);
+    // Set the wheels to intaking speed
+    m_intake.setIntakeWheel(kIntakeReverseSpeed);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,6 +56,7 @@ public class IntakeLauncher extends Command {
   @Override
   public void end(boolean interrupted) {
     // Stop the wheels when the command ends.
-    m_launcher.stop();
+    m_intake.stop();
+    
   }
 }
