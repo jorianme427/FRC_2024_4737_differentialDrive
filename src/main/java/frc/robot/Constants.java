@@ -29,6 +29,11 @@ public final class Constants {
 
     // Current limit for drivetrain motors
     public static final int kCurrentLimit = 60;
+
+    public static final double kLeftRearSpeed = 1;
+    public static final double kRightRearSpeed = 1;
+    public static final double kLeftFrontSpeed = 1;
+    public static final double kRightFrontSpeed = -1;
   }
 
   public static class LauncherConstants {
@@ -47,7 +52,11 @@ public final class Constants {
     public static final double kReverseLeftLauncherSpeed = -1;
     public static final double kReverseRightLauncherSpeed = -1;
 
-    public static final double kLauncherDelay = .25;
+    public static final double kAmpLeftLauncherSpeed = .6;
+    public static final double kAmpRightLauncherSpeed = .6;
+
+    public static final double kLauncherDelay = 2.5;
+  
     
     
   }
@@ -67,8 +76,8 @@ public final class Constants {
     public static final double kIntakeSpeed = 1;
     public static final double kIntakeReverseSpeed = -1;
 
-    public static final double kFeederSpeed = 1;
-    public static final double kFeederReverseSpeed = -1;
+    public static final double kFeederSpeed = 0.5;
+    public static final double kFeederReverseSpeed = -0.5;
 
     
     public static final double kIntakeFeederDelay = 2.0;
@@ -98,8 +107,8 @@ public static class ElevatorConstants {
 
     // Speeds for wheels when Elevating. Elevating speeds are negative to run the wheels
     // in reverse
-    public static final double kElevatorSpeed = .4;
-    public static final double kElevatorReverseSpeed = -.4;
+    public static final double kElevatorSpeed = .3;
+    public static final double kElevatorReverseSpeed = -.3;
 
     public static final double kElevatorDelay = 0.000176;
 }

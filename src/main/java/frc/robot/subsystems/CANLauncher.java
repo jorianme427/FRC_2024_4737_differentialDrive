@@ -8,12 +8,16 @@ import static frc.robot.Constants.LauncherConstants.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANLauncher extends SubsystemBase {
   CANSparkMax m_leftLaunchWheel;
   CANSparkMax m_rightLaunchWheel;
+  RelativeEncoder m_rightEncoder;
+  RelativeEncoder m_leftEncoder;
 
   /** Creates a new Launcher. */
   public CANLauncher() {
@@ -22,6 +26,11 @@ public class CANLauncher extends SubsystemBase {
 
     m_leftLaunchWheel.setSmartCurrentLimit(kLeftLauncherCurrentLimit);
     m_rightLaunchWheel.setSmartCurrentLimit(kRightLauncherCurrentLimit);
+
+    m_rightEncoder = m_rightLaunchWheel.getEncoder();
+    m_leftEncoder = m_leftLaunchWheel.getEncoder();
+    m_rightEncoder.setPosition(0);
+    m_rightEncoder.setPosition(0);
   }
 
   /**
@@ -45,6 +54,52 @@ public class CANLauncher extends SubsystemBase {
           stop();
         });
   }
+
+   public Command getShooterIntakeCommand() {
+    // The startEnd helper method takes a method to call when the command is initialized and one to
+    // call when it ends
+    return this.startEnd(
+        // When the command is initialized, set the wheels to the intake speed values
+        () -> {
+          setLeftLaunchWheel(kReverseLeftLauncherSpeed);
+          setRightLaunchWheel(kReverseRightLauncherSpeed);
+        },
+        // When the command stops, stop the wheels
+        () -> {
+          stop();
+        });
+  } 
+
+     public Command getReverseShooterIntakeCommand() {
+    // The startEnd helper method takes a method to call when the command is initialized and one to
+    // call when it ends
+    return this.startEnd(
+        // When the command is initialized, set the wheels to the intake speed values
+        () -> {
+          setLeftLaunchWheel(kLeftLauncherSpeed);
+          setRightLaunchWheel(kRightLauncherSpeed);
+        },
+        // When the command stops, stop the wheels
+        () -> {
+          stop();
+        });
+  } 
+     public Command getAmpShooterCommand() {
+    // The startEnd helper method takes a method to call when the command is initialized and one to
+    // call when it ends
+    return this.startEnd(
+        // When the command is initialized, set the wheels to the intake speed values
+        () -> {
+          setLeftLaunchWheel(kAmpLeftLauncherSpeed);
+          setRightLaunchWheel(kAmpRightLauncherSpeed);
+        },
+        // When the command stops, stop the wheels
+        () -> {
+          stop();
+        });
+  } 
+
+
 
   // An accessor method to set the speed (technically the output percentage) of the launch wheel
   public void setLeftLaunchWheel(double speed) {

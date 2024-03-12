@@ -47,6 +47,22 @@ public class CANIntake extends SubsystemBase {
           stop();
         });
   }
+
+    public Command getIntakeNoteReverseCommand() {
+    // The startEnd helper method takes a method to call when the command is initialized and one to
+    // call when it ends
+    return this.startEnd(
+        // When the command is initialized, set the wheels to the intake speed values
+        () -> {
+          
+          setIntakeWheel(kIntakeReverseSpeed);
+          setFeederWheel(kFeederReverseSpeed);
+        },
+        // When the command stops, stop the wheels
+        () -> {
+          stop();
+        });
+  }
  public Command getIntakeOutCommand() {
     // The startEnd helper method takes a method to call when the command is initialized and one to
     // call when it ends
@@ -62,6 +78,8 @@ public class CANIntake extends SubsystemBase {
           stop();
         });
   }
+
+
   public Command getFeedShootCommand() {
     // The startEnd helper method takes a method to call when the command is initialized and one to
     // call when it ends

@@ -67,7 +67,6 @@ public Command getCLimberDownCommand() {
   // individual accessors with speed = 0 instead
   public void stop() {
     m_climber.set(0);
-
-}
+  }
   
 } 

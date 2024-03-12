@@ -7,12 +7,16 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.ElevatorConstants.*;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANElevator extends SubsystemBase {
   CANSparkMax m_elevator;
+  RelativeEncoder m_Encoder;
  
 
   /** Creates a new Elevator. */
@@ -20,7 +24,9 @@ public class CANElevator extends SubsystemBase {
     m_elevator = new CANSparkMax(kElevatorID, MotorType.kBrushless);
     
     m_elevator.setSmartCurrentLimit(kElevatorCurrentLimit);
-    
+
+    m_Encoder = m_elevator.getEncoder();
+    m_Encoder.setPosition(0);
   }
 
   /**
@@ -50,7 +56,7 @@ public class CANElevator extends SubsystemBase {
     return this.startEnd(
         // When the command is initialized, set the wheels to the intake speed values
         () -> {
-          setElevator(kElevatorReverseSpeed);
+          setreverseElevator(kElevatorReverseSpeed);
           
         },
         // When the command stops, stop the wheels
@@ -61,15 +67,27 @@ public class CANElevator extends SubsystemBase {
 
   // An accessor method to set the speed (technically the output percentage) of the Elevator
   public void setElevator(double speed) {
-    m_elevator.set(speed);
+    if (m_Encoder.getPosition() <= 47){
+      m_elevator.set(speed);
+    }
   }
 
-  
+  public void setreverseElevator(double speed) {
+    if (m_Encoder.getPosition() >= 2){
+      m_elevator.set(
+        speed);
+    }
+  }
 
   // A helper method to stop both wheels. You could skip having a method like this and call the
   // individual accessors with speed = 0 instead
   public void stop() {
     m_elevator.set(0);
     
+  }
+
+  @Override
+  public void periodic(){
+    SmartDashboard.putNumber("Encoder", m_Encoder.getPosition());
   }
 }

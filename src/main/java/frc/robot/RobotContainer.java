@@ -7,20 +7,23 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LauncherConstants;
+//import frc.robot.Constants.LauncherConstants;
+//import frc.robot.Constants.DrivetrainConstants;
+//import frc.robot.Constants.IntakeConstants;
+//import frc.robot.Constants.LauncherConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ElevatorUp;
+//import frc.robot.commands.ElevatorUp;
 import frc.robot.commands.LaunchNote;
-import frc.robot.commands.PrepareLaunch;
-import frc.robot.commands.IntakeNote;
+//import frc.robot.commands.PrepareLaunch;
+//import frc.robot.commands.IntakeNote;
 import frc.robot.commands.IntakeLauncher;
 import frc.robot.commands.FeedShoot;
+//import frc.robot.subsystems.CANClimber;
 //import frc.robot.subsystems.PWMDrivetrain;
 //import frc.robot.subsystems.PWMLauncher;
-import frc.robot.subsystems.CANClimber;
+//import frc.robot.subsystems.CANClimber;
+//Climber is closed for now due to problems//
 import frc.robot.subsystems.CANDrivetrain;
 import frc.robot.subsystems.CANElevator;
 import frc.robot.subsystems.CANLauncher;
@@ -38,7 +41,8 @@ public class RobotContainer {
    private final CANDrivetrain m_drivetrain = new CANDrivetrain();
    private final CANLauncher m_launcher = new CANLauncher();
    private final CANIntake m_Intake = new CANIntake();
-   private final CANClimber m_climber = new CANClimber();
+   //private final CANClimber m_Climber = new CANClimber(); 
+   // climber value not being used//
    private final CANElevator m_Elevator = new CANElevator();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
@@ -54,6 +58,7 @@ public class RobotContainer {
     configureBindings();
   }
 // Eesh Garg was here
+// Rodent Turtle Tina waz hear
   /**
    * Use this method to define your trigger->command mappings. Triggers can be accessed via the
    * named factory methods in the Command* classes in edu.wpi.first.wpilibj2.command.button (shown
@@ -61,20 +66,30 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Set the default command for the drivetrain to drive using the joysticks
-    m_drivetrain.setDefaultCommand(
+    /*m_drivetrain.setDefaultCommand(
         new RunCommand(
             () ->
                 m_drivetrain.arcadeDrive(
                     -m_driverController.getLeftY(), -m_driverController.getRightX()),
+            m_drivetrain));*/
+
+    m_drivetrain.setDefaultCommand(
+        new RunCommand(
+            () ->
+                m_drivetrain.arcadeDrive(
+                    -(m_driverController.getRightTriggerAxis() - m_driverController.getLeftTriggerAxis()), -m_driverController.getRightX()),
             m_drivetrain));
 
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
-    m_operatorController
-        .y()
-        .whileTrue(
-            new LaunchNote(m_launcher)
-                .handleInterrupt(() -> m_launcher.stop()));
+   // m_operatorController
+     //   .y()
+       // .whileTrue(
+         //   new LaunchNote(m_launcher)
+           // .withTimeout(LauncherConstants.kLauncherDelay)
+            //.andThen(new FeedShoot(m_Intake))
+            //.withTimeout(LauncherConstants.kLauncherDelay)
+            //.handleInterrupt(() -> m_Intake.stop()));
     m_operatorController
         .b()
         .whileTrue(
@@ -82,11 +97,12 @@ public class RobotContainer {
                 .handleInterrupt(() -> m_Intake.stop()));
         
                 
-    m_operatorController
-        .rightTrigger()
-        .whileTrue(
-            new IntakeLauncher(m_launcher)
-                .handleInterrupt(() -> m_launcher.stop()));
+   // m_operatorController
+    //    .rightTrigger()
+      //  .whileTrue(
+        //    new IntakeLauncher(m_launcher)
+            
+          //      .handleInterrupt(() -> m_launcher.stop()));
                 
                 
 
@@ -98,25 +114,30 @@ public class RobotContainer {
         
     // Set up a binding to run the launcher command while the operator is pressing and holding the
     // left trigger
-   // m_operatorController.y().whileTrue(m_launcher.getLauncherCommand());
+    
+    m_operatorController.y().whileTrue(m_launcher.getLauncherCommand());
+    //m_operatorController.y().whileTrue(m_launcher.getAmpShooterCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // right trigger
     m_operatorController.rightTrigger().whileTrue(m_Intake.getIntakeNoteCommand());
-
-    m_operatorController.b().whileTrue(m_Intake.getFeedShootCommand());
+    m_operatorController.rightTrigger().whileTrue(m_launcher.getShooterIntakeCommand());
     // Set up a binding to run the climber UP command while the operator is pressing and holding the
     // a button
-    m_operatorController.a().whileTrue(m_climber.getCLimberCommand());
+    m_operatorController.leftBumper().whileTrue(m_Elevator.getElevatorCommand()); 
+    m_operatorController.leftTrigger().whileTrue(m_Elevator.getElevatorDownCommand());
+    // changed from getElevatorIntakecommand to getElevatorcommand will chin case of any errors 
+
     // Set up a binding to run the climber DOWN command while the operator is pressing and holding the
     // b button
-    //m_operatorController.b().whileTrue(m_climber.getCLimberDownCommand());
+    //m_operatorController.b().whileTrue(m_Intake.getFeedShootCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // left Bumper
-
-    m_operatorController.leftTrigger().whileTrue(m_Elevator.getElevatorDownCommand());
-    m_operatorController.leftBumper().whileTrue(m_Elevator.getElevatorCommand());
+  
+  //right bumper    trty deleting this /* 
+    m_operatorController.rightBumper().whileTrue(m_Intake.getIntakeNoteReverseCommand());
+    m_operatorController.rightBumper().whileTrue(m_launcher.getReverseShooterIntakeCommand());
+     
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
