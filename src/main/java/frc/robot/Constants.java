@@ -100,7 +100,7 @@ public final class Constants {
 }
 public static class ElevatorConstants {
     // PWM ports/CAN IDs for motor controllers
-    public static final int kElevatorID = 11;
+    public static final int kElevatorID = 12;
     
     // Current limit for Elevator
     public static final int kElevatorCurrentLimit = 80;
