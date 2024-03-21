@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -116,5 +117,11 @@ public class CANLauncher extends SubsystemBase {
   public void stop() {
     m_leftLaunchWheel.set(0);
     m_rightLaunchWheel.set(0);
+  }
+
+  @Override
+  public void periodic(){
+    SmartDashboard.putNumber("Right Launcher Speed", m_rightEncoder.getVelocity());
+    SmartDashboard.putNumber("Left Launcher Speed", m_leftEncoder.getVelocity());
   }
 }

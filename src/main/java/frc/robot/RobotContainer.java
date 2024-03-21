@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 //import frc.robot.commands.ElevatorUp;
-import frc.robot.commands.LaunchNote;
+//import frc.robot.commands.LaunchNote;
 //import frc.robot.commands.PrepareLaunch;
 //import frc.robot.commands.IntakeNote;
-import frc.robot.commands.IntakeLauncher;
+//import frc.robot.commands.IntakeLauncher;
 import frc.robot.commands.FeedShoot;
-//import frc.robot.subsystems.CANClimber;
+import frc.robot.subsystems.CANClimber;
 //import frc.robot.subsystems.PWMDrivetrain;
 //import frc.robot.subsystems.PWMLauncher;
 //import frc.robot.subsystems.CANClimber;
@@ -41,8 +41,7 @@ public class RobotContainer {
    private final CANDrivetrain m_drivetrain = new CANDrivetrain();
    private final CANLauncher m_launcher = new CANLauncher();
    private final CANIntake m_Intake = new CANIntake();
-   //private final CANClimber m_Climber = new CANClimber(); 
-   // climber value not being used//
+   private final CANClimber m_Climber = new CANClimber(); 
    private final CANElevator m_Elevator = new CANElevator();
 
   /*The gamepad provided in the KOP shows up like an XBox controller if the mode switch is set to X mode using the
@@ -79,7 +78,7 @@ public class RobotContainer {
                 m_drivetrain.arcadeDrive(
                     -(m_driverController.getRightTriggerAxis() - m_driverController.getLeftTriggerAxis()), -m_driverController.getRightX()),
             m_drivetrain));
-
+   
     /*Create an inline sequence to run when the operator presses and holds the A (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command */
    // m_operatorController
@@ -95,6 +94,8 @@ public class RobotContainer {
         .whileTrue(
           new FeedShoot(m_Intake)
                 .handleInterrupt(() -> m_Intake.stop()));
+    
+
         
                 
    // m_operatorController
@@ -114,8 +115,11 @@ public class RobotContainer {
         
     // Set up a binding to run the launcher command while the operator is pressing and holding the
     // left trigger
-    
+    m_driverController.y().whileTrue(m_launcher.getAmpShooterCommand());
+
     m_operatorController.y().whileTrue(m_launcher.getLauncherCommand());
+    m_operatorController.a().whileTrue(m_Climber.getClimberDownCommand());
+    m_operatorController.x().whileTrue(m_Climber.getClimberUpCommand());
     //m_operatorController.y().whileTrue(m_launcher.getAmpShooterCommand());
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // right trigger

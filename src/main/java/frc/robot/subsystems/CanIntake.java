@@ -18,7 +18,7 @@ public class CANIntake extends SubsystemBase {
   /** Creates a new Intake. */
   public CANIntake() {
     m_IntakeWheel = new CANSparkMax(kIntakeID, MotorType.kBrushed);
-    m_FeederWheel = new CANSparkMax(kFeederID, MotorType.kBrushed);
+    m_FeederWheel = new CANSparkMax(kFeederID, MotorType.kBrushless);
 
     m_IntakeWheel.setSmartCurrentLimit(kIntakeCurrentLimit);
     m_FeederWheel.setSmartCurrentLimit(kFeederCurrentLimit);

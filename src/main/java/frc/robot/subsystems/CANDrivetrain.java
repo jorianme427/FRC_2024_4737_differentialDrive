@@ -8,10 +8,13 @@ import static frc.robot.Constants.DrivetrainConstants.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj2.command.Command;
+//import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /* This class declares the subsystem for the robot drivetrain if controllers are connected via CAN. Make sure to go to
@@ -25,6 +28,10 @@ public class CANDrivetrain extends SubsystemBase {
   /*Class member variables. These variables represent things the class needs to keep track of and use between
   different method calls. */
   DifferentialDrive m_drivetrain;
+  
+  RelativeEncoder m_leftFrontSpeedEncoder;
+  RelativeEncoder m_rightFrontSpeedEncoder;
+
 
   /*Constructor. This method is called when an instance of the class is created. This should generally be used to set up
    * member variables and perform any configuration or set up necessary on hardware.
@@ -49,11 +56,17 @@ public class CANDrivetrain extends SubsystemBase {
       // Invert the left side so both side drive forward with positive motor outputs
       leftFront.setInverted(true);
       rightFront.setInverted(false);
-
+      
+      //Get encoder's
+      m_leftFrontSpeedEncoder = leftFront.getEncoder();
+      m_rightFrontSpeedEncoder = rightFront.getEncoder();
+      m_leftFrontSpeedEncoder.setPosition(0);
+      m_rightFrontSpeedEncoder.setPosition(0);
       // Put the front motors into the differential drive object. This will control all 4 motors with
       // the rears set to follow the fronts
       m_drivetrain = new DifferentialDrive(leftFront, rightFront);
     }
+
   }
 
   /*Method to control the drivetrain using arcade drive. Arcade drive takes a speed in the X (forward/back) direction
@@ -68,5 +81,9 @@ public class CANDrivetrain extends SubsystemBase {
   public void periodic() {
     /*This method will be called once per scheduler run. It can be used for running tasks we know we want to update each
      * loop such as processing sensor data. Our drivetrain is simple so we don't have anything to put here */
+    SmartDashboard.putNumber("Left Drive Position", m_leftFrontSpeedEncoder.getPosition());
+    SmartDashboard.putNumber("Right Drive Position", m_rightFrontSpeedEncoder.getPosition());
+    SmartDashboard.putNumber("Left Drive Speed", m_leftFrontSpeedEncoder.getVelocity());
+    SmartDashboard.putNumber("Right Drive Speed", m_rightFrontSpeedEncoder.getVelocity());
   }
 }
